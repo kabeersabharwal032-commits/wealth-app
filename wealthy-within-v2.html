@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
+<meta name="theme-color" content="#080610"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Wealthy Within"/>
+<meta name="description" content="Wealthy Within - 21-Day Inner Wealth Journey by Kabeer Sabharwal"/>
+<title>Wealthy Within</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   WEALTHY WITHIN v2 — Premium Design System
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Palette */
+  --bg: #080610;
+  --bg-surface: #0f0c1a;
+  --bg-card: #151222;
+  --bg-elevated: #1c1830;
+  --bg-input: #1a162a;
+  --gold-dim: #6b5520;
+  --gold: #c9993a;
+  --gold-bright: #f0c95c;
+  --gold-glow: #ffe08a;
+  --text-primary: #f4ede0;
+  --text-secondary: #b8ad98;
+  --text-muted: #6d6355;
+  --border-subtle: rgba(201,153,58,0.08);
+  --border-medium: rgba(201,153,58,0.18);
+  --border-strong: rgba(201,153,58,0.35);
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-full: 9999px;
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 350ms;
+  --duration-slow: 500ms;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
+body {
+  height: 100dvh; overflow: hidden; background: var(--bg);
+  font-family: var(--font-body); color: var(--text-primary);
+  display: flex; flex-direction: column; line-height: 1.5;
+}
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+textarea, select { font-family: inherit; }
+
+/* ── Layout ── */
+.view { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+.view.is-active { display: flex; }
+.view-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; }
+.view-scroll::-webkit-scrollbar { width: 2px; }
+.view-scroll::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+/* ── Bottom Navigation ── */
+.nav-bar {
+  display: flex; align-items: stretch;
+  background: rgba(8,6,16,0.92);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-xs) 0;
+  padding-bottom: max(var(--space-xs), env(safe-area-inset-bottom));
+  flex-shrink: 0; z-index: 50;
+}
+.nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 4px; padding: 10px 0 6px;
+  color: var(--text-muted); font-size: 9px; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase;
+  transition: color var(--duration-fast) var(--ease-smooth);
+  position: relative;
+}
+.nav-item svg { width: 22px; height: 22px; stroke-width: 1.6; transition: transform var(--duration-normal) var(--ease-spring); }
+.nav-item.is-active { color: var(--gold-bright); }
+.nav-item.is-active svg { transform: scale(1.12) translateY(-1px); }
+.nav-item.is-active::after {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 20px; height: 2px; background: var(--gold-bright); border-radius: 0 0 2px 2px;
+  animation: navDot 0.3s var(--ease-spring);
+}
+@keyframes navDot { from { width: 0; opacity: 0; } to { width: 20px; opacity: 1; } }
+
+/* ── Page Header ── */
+.page-header {
+  padding: 52px var(--space-lg) var(--space-md);
+  flex-shrink: 0;
+}
+.page-header__title {
+  font-family: var(--font-display); font-size: clamp(26px, 6vw, 32px);
+  font-weight: 700; color: var(--text-primary); line-height: 1.1;
+}
+.page-header__subtitle {
+  font-size: 13px; color: var(--text-muted); font-weight: 300;
+  margin-top: 4px; letter-spacing: 0.2px;
+}
+
+/* ══════════════════════════════════════════
+   HOME VIEW
+   ══════════════════════════════════════════ */
+.hero {
+  padding: 60px var(--space-lg) var(--space-xl);
+  text-align: center; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 400px; pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 50% 20%, rgba(201,153,58,0.07) 0%, transparent 70%);
+  animation: heroPulse 7s ease-in-out infinite;
+}
+@keyframes heroPulse {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+}
+.hero__logo {
+  width: 72px; height: 72px; margin: 0 auto var(--space-lg);
+  border-radius: 50%; position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle, rgba(201,153,58,0.1) 0%, rgba(201,153,58,0.02) 70%);
+  border: 1px solid rgba(201,153,58,0.2);
+  box-shadow: 0 0 40px rgba(201,153,58,0.08), inset 0 0 30px rgba(201,153,58,0.04);
+  animation: logoBreathe 5s ease-in-out infinite;
+}
+@keyframes logoBreathe {
+  0%, 100% { box-shadow: 0 0 40px rgba(201,153,58,0.08), inset 0 0 30px rgba(201,153,58,0.04); }
+  50% { box-shadow: 0 0 60px rgba(201,153,58,0.15), inset 0 0 40px rgba(201,153,58,0.06); }
+}
+.hero__logo svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; stroke-width: 1.3; }
+.hero__title {
+  font-family: var(--font-display); font-size: clamp(38px, 11vw, 56px);
+  font-weight: 700; line-height: 1.0; position: relative; z-index: 1;
+  color: var(--text-primary); letter-spacing: -0.5px;
+}
+.hero__title em {
+  font-style: italic; font-weight: 400;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 50%, var(--gold-glow) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero__tagline {
+  font-size: 11px; color: var(--text-muted); letter-spacing: 4px;
+  text-transform: uppercase; margin-top: 14px; font-weight: 400;
+  position: relative; z-index: 1;
+}
+.hero__author {
+  font-size: 12px; color: var(--gold-dim); margin-top: 6px;
+  letter-spacing: 0.5px; font-family: var(--font-display); font-style: italic;
+  position: relative; z-index: 1;
+}
+
+/* ── Progress Section ── */
+.progress-section {
+  padding: 0 var(--space-lg) var(--space-lg); flex-shrink: 0;
+}
+.progress__header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 10px;
+}
+.progress__label { font-size: 13px; color: var(--text-secondary); font-weight: 400; }
+.progress__value { font-family: var(--font-display); font-size: 26px; color: var(--gold-bright); font-weight: 600; }
+.progress__track {
+  height: 4px; background: rgba(255,255,255,0.04); border-radius: 4px;
+  overflow: hidden; position: relative; margin-bottom: 16px;
+}
+.progress__fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-bright));
+  transition: width 1.2s var(--ease-out);
+  position: relative;
+}
+.progress__fill::after {
+  content: ''; position: absolute; right: -2px; top: 50%; transform: translateY(-50%);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold-bright); box-shadow: 0 0 10px var(--gold-bright), 0 0 4px var(--gold);
+}
+.progress__phases { display: flex; gap: var(--space-lg); justify-content: center; }
+.phase { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-secondary); letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; }
+.phase__dot { width: 7px; height: 7px; border-radius: 50%; }
+
+/* ── Separator ── */
+.separator {
+  height: 1px; margin: 0 var(--space-xl);
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  opacity: 0.5; flex-shrink: 0;
+}
+
+/* ── Day Grid ── */
+.day-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; padding: var(--space-md) var(--space-md) var(--space-2xl);
+}
+@media (min-width: 420px) { .day-grid { gap: 12px; padding: var(--space-md) var(--space-lg) var(--space-2xl); } }
+@media (min-width: 600px) { .day-grid { grid-template-columns: repeat(4, 1fr); max-width: 600px; margin: 0 auto; } }
+@media (min-width: 900px) { .day-grid { grid-template-columns: repeat(7, 1fr); max-width: 860px; } }
+
+.day-card {
+  position: relative; border-radius: var(--r-md); padding: 14px 12px 12px;
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  min-height: 90px; display: flex; flex-direction: column; justify-content: space-between;
+  transition: all var(--duration-normal) var(--ease-smooth);
+  overflow: hidden; animation: cardAppear 0.5s var(--ease-out) both;
+}
+.day-card::before {
+  content: ''; position: absolute; inset: 0; opacity: 0;
+  background: linear-gradient(145deg, rgba(201,153,58,0.06) 0%, transparent 60%);
+  transition: opacity var(--duration-normal);
+}
+.day-card:hover { border-color: var(--border-medium); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+.day-card:hover::before { opacity: 1; }
+.day-card:active { transform: scale(0.97) translateY(-1px); }
+.day-card--done {
+  border-color: var(--border-strong);
+  background: linear-gradient(145deg, rgba(201,153,58,0.06) 0%, var(--bg-card) 100%);
+}
+.day-card--done::after {
+  content: ''; position: absolute; top: -15px; right: -15px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(240,201,92,0.12), transparent);
+}
+@keyframes cardAppear { from { opacity: 0; transform: translateY(16px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.day-card__number {
+  font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-muted); position: relative; z-index: 1;
+}
+.day-card--done .day-card__number { color: var(--gold); }
+.day-card__title {
+  font-family: var(--font-display); font-size: 15px; font-weight: 600;
+  color: var(--text-primary); margin-top: 6px; line-height: 1.2;
+  position: relative; z-index: 1;
+}
+.day-card__check {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  width: 16px; height: 16px; opacity: 0;
+  transition: opacity var(--duration-fast), transform var(--duration-normal) var(--ease-spring);
+}
+.day-card--done .day-card__check { opacity: 1; transform: scale(1); }
+.day-card__check svg { width: 16px; height: 16px; stroke: var(--gold-bright); fill: none; stroke-width: 2.5; }
+
+/* ── Install Banner ── */
+.install-banner {
+  margin: 0 var(--space-md) var(--space-md); padding: 14px var(--space-md);
+  background: linear-gradient(135deg, rgba(201,153,58,0.05) 0%, rgba(201,153,58,0.02) 100%);
+  border: 1px solid var(--border-subtle); border-radius: var(--r-md);
+  display: flex; align-items: center; gap: 14px;
+}
+.install-banner__text { font-size: 13px; color: var(--text-secondary); flex: 1; line-height: 1.4; font-weight: 300; }
+.install-banner__btn {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  border-radius: var(--r-sm); color: var(--bg); padding: 9px 18px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.5px; white-space: nowrap;
+  transition: transform var(--duration-fast) var(--ease-smooth), box-shadow var(--duration-fast);
+}
+.install-banner__btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(201,153,58,0.25); }
+
+/* ══════════════════════════════════════════
+   MODAL / DAY DETAIL
+   ══════════════════════════════════════════ */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(4,2,8,0.88); backdrop-filter: blur(12px);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+.modal-backdrop.is-open { opacity: 1; pointer-events: all; }
+.modal-panel {
+  width: 100%; max-width: 580px; max-height: 92dvh;
+  background: var(--bg-surface); border-radius: var(--r-xl) var(--r-xl) 0 0;
+  border-top: 1px solid var(--border-medium); overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform var(--duration-slow) var(--ease-out);
+  box-shadow: 0 -20px 80px rgba(0,0,0,0.6);
+}
+@media (min-width: 600px) { .modal-panel { border-radius: var(--r-xl); margin-bottom: var(--space-lg); max-height: 85dvh; } }
+.modal-backdrop.is-open .modal-panel { transform: translateY(0); }
+.modal-panel__handle { width: 36px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin: 14px auto 0; }
+.modal-panel__body { padding: var(--space-lg); }
+@media (min-width: 600px) { .modal-panel__body { padding: var(--space-xl); } }
+.modal__meta { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px; }
+.modal__title { font-family: var(--font-display); font-size: clamp(28px, 7vw, 38px); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-lg); line-height: 1.05; }
+.modal-section { margin-bottom: var(--space-md); }
+.modal-section__label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-sm); }
+.modal-section__practice {
+  background: var(--bg-elevated); border-radius: var(--r-md); padding: var(--space-md) 18px;
+  border: 1px solid var(--border-subtle); font-size: 15px; line-height: 1.9;
+  color: var(--text-secondary); font-weight: 300;
+}
+.modal-section__affirmation {
+  background: linear-gradient(135deg, rgba(201,153,58,0.06) 0%, rgba(201,153,58,0.02) 100%);
+  border-radius: var(--r-md); padding: var(--space-md) 18px;
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-display); font-size: 18px; line-height: 1.75;
+  color: var(--gold-bright); font-style: italic; font-weight: 400;
+}
+.modal-section__insight {
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md); padding: var(--space-md) 18px;
+  font-size: 14px; line-height: 1.85; color: var(--text-secondary); font-weight: 300;
+  min-height: 64px;
+}
+.btn-insight {
+  margin-top: 10px; width: 100%; padding: 14px; border-radius: var(--r-md);
+  border: 1px solid var(--border-medium); background: rgba(201,153,58,0.04);
+  color: var(--gold); font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+.btn-insight:hover:not(:disabled) { background: rgba(201,153,58,0.1); border-color: var(--gold); transform: translateY(-1px); }
+.btn-insight:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-complete {
+  width: 100%; padding: 18px; border-radius: var(--r-md);
+  font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+  transition: all var(--duration-normal) var(--ease-smooth); margin-top: var(--space-md);
+}
+.btn-complete:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,153,58,0.2); }
+
+/* ══════════════════════════════════════════
+   AI COACH VIEW
+   ══════════════════════════════════════════ */
+.quick-prompts { padding: 0 var(--space-md) var(--space-sm); display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; overflow-x: auto; }
+.quick-prompts::-webkit-scrollbar { display: none; }
+.chip {
+  background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--r-full);
+  padding: 8px 16px; font-size: 12px; color: var(--text-secondary); white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+.chip:hover { border-color: var(--border-medium); color: var(--gold-bright); background: rgba(201,153,58,0.04); }
+.chip:active { transform: scale(0.95); }
+
+.chat-messages { padding: var(--space-md) var(--space-md) var(--space-sm); display: flex; flex-direction: column; gap: var(--space-md); }
+.bubble {
+  max-width: 85%; padding: 14px 18px; border-radius: var(--r-lg);
+  font-size: 14.5px; line-height: 1.8; font-weight: 300;
+  animation: bubbleIn 0.35s var(--ease-out) both;
+}
+@keyframes bubbleIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.bubble--user {
+  align-self: flex-end; border-bottom-right-radius: 4px;
+  background: linear-gradient(135deg, rgba(201,153,58,0.1), rgba(201,153,58,0.04));
+  border: 1px solid var(--border-medium); color: var(--text-primary);
+}
+.bubble--ai {
+  align-self: flex-start; border-bottom-left-radius: 4px;
+  background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-secondary);
+}
+.bubble--loading { color: var(--text-muted); font-style: italic; opacity: 0.7; }
+@media (min-width: 700px) { .bubble { max-width: 68%; } .chat-messages { max-width: 700px; margin: 0 auto; width: 100%; } }
+
+.chat-input-bar {
+  padding: var(--space-sm) var(--space-md); display: flex; gap: 10px; align-items: flex-end;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(8,6,16,0.95); backdrop-filter: blur(20px);
+  flex-shrink: 0; padding-bottom: max(var(--space-sm), env(safe-area-inset-bottom));
+}
+.chat-input-bar textarea {
+  flex: 1; background: var(--bg-input); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md); padding: 12px 16px; color: var(--text-primary);
+  font-size: 14.5px; resize: none; outline: none; max-height: 110px;
+  line-height: 1.5; font-weight: 300; transition: border-color var(--duration-fast);
+}
+.chat-input-bar textarea:focus { border-color: var(--border-medium); }
+.chat-input-bar textarea::placeholder { color: var(--text-muted); }
+.btn-send {
+  width: 46px; height: 46px; border-radius: var(--r-md); flex-shrink: 0;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  box-shadow: 0 2px 12px rgba(201,153,58,0.15);
+}
+.btn-send:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(201,153,58,0.25); }
+.btn-send:disabled { opacity: 0.3; cursor: not-allowed; }
+.btn-send svg { width: 16px; height: 16px; stroke: var(--bg); fill: none; stroke-width: 2.5; }
+
+/* ══════════════════════════════════════════
+   JOURNAL VIEW
+   ══════════════════════════════════════════ */
+.journal-form { padding: 0 var(--space-md) var(--space-md); }
+.journal-select {
+  width: 100%; background: var(--bg-input); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md); padding: 14px 16px; color: var(--text-primary);
+  font-size: 14px; outline: none; margin-bottom: var(--space-sm); appearance: none;
+  font-weight: 400; cursor: pointer; transition: border-color var(--duration-fast);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236d6355' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+}
+.journal-select:focus { border-color: var(--border-medium); }
+.journal-select option { background: var(--bg-surface); }
+.journal-textarea {
+  width: 100%; background: var(--bg-input); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md); padding: var(--space-md); color: var(--text-primary);
+  font-size: 15px; line-height: 1.85; resize: none; outline: none;
+  min-height: 170px; font-weight: 300; transition: border-color var(--duration-fast);
+}
+.journal-textarea:focus { border-color: var(--border-medium); }
+.journal-textarea::placeholder { color: var(--text-muted); }
+.btn-save-entry {
+  margin-top: var(--space-sm); width: 100%; padding: 15px; border-radius: var(--r-md);
+  border: 1px solid var(--border-medium); background: rgba(201,153,58,0.04);
+  color: var(--gold); font-size: 11px; letter-spacing: 2px;
+  font-weight: 600; text-transform: uppercase;
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+.btn-save-entry:hover { background: rgba(201,153,58,0.1); transform: translateY(-1px); }
+
+.journal-entries { padding: 0 var(--space-md) 80px; }
+.journal-entries__label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-sm); }
+.entry-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--r-md);
+  padding: 15px 17px; margin-bottom: 8px; transition: all var(--duration-fast) var(--ease-smooth);
+}
+.entry-card:hover { border-color: var(--border-medium); transform: translateX(3px); }
+.entry-card__day { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 5px; }
+.entry-card__text { font-size: 13.5px; color: var(--text-secondary); line-height: 1.65; font-weight: 300; }
+
+/* ══════════════════════════════════════════
+   STATS / PROGRESS VIEW
+   ══════════════════════════════════════════ */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 var(--space-md) var(--space-md); }
+@media (min-width: 600px) { .stats-grid { max-width: 480px; margin: 0 auto; } }
+.stat-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--r-lg);
+  padding: 22px var(--space-md); text-align: center;
+  transition: all var(--duration-normal) var(--ease-smooth); position: relative; overflow: hidden;
+}
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  opacity: 0; transition: opacity var(--duration-normal);
+}
+.stat-card:hover { border-color: var(--border-medium); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.stat-card:hover::before { opacity: 1; }
+.stat-card__value { font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--gold-bright); line-height: 1; }
+.stat-card__label { font-size: 11px; color: var(--text-secondary); margin-top: 6px; font-weight: 400; }
+
+.heatmap { padding: 0 var(--space-md) var(--space-xl); }
+@media (min-width: 600px) { .heatmap { max-width: 480px; margin: 0 auto; } }
+.heatmap__label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-sm); }
+.heatmap__grid { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
+.heatmap__cell {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; border: 1px solid;
+  cursor: pointer; transition: all var(--duration-fast) var(--ease-smooth);
+}
+.heatmap__cell:hover { transform: scale(1.1); }
+.heatmap__cell:active { transform: scale(0.9); }
+.heatmap__cell--done {
+  border-color: rgba(201,153,58,0.5); background: rgba(201,153,58,0.1);
+  color: var(--gold-bright); box-shadow: 0 2px 10px rgba(201,153,58,0.1);
+}
+.heatmap__cell--pending { border-color: rgba(255,255,255,0.06); background: var(--bg-card); color: var(--text-muted); }
+
+/* ══════════════════════════════════════════
+   TOAST
+   ══════════════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 82px; left: 50%;
+  transform: translateX(-50%) translateY(20px) scale(0.95);
+  background: rgba(8,6,16,0.92); border: 1px solid var(--border-medium);
+  backdrop-filter: blur(24px); color: var(--gold-bright);
+  padding: 12px 26px; border-radius: var(--r-full); font-size: 13px;
+  opacity: 0; pointer-events: none;
+  transition: all var(--duration-normal) var(--ease-spring);
+  z-index: 500; white-space: nowrap; font-weight: 500; letter-spacing: 0.2px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+
+/* ══════════════════════════════════════════
+   ANIMATIONS & ACCESSIBILITY
+   ══════════════════════════════════════════ */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero__title { font-size: 52px; }
+  .day-grid { max-width: 700px; }
+}
+@media (min-width: 1024px) {
+  .day-grid { max-width: 900px; grid-template-columns: repeat(7, 1fr); }
+}
+</style>
+</head>
+<body>
+<!-- ═══ HOME VIEW ═══ -->
+<div class="view is-active" id="view-home">
+  <div class="hero">
+    <div class="hero__logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2L9 9H2l5.5 4-2 7L12 16l6.5 4-2-7L22 9h-7z"/></svg>
+    </div>
+    <h1 class="hero__title">Wealthy <em>Within</em></h1>
+    <p class="hero__tagline">21-Day Inner Wealth Journey</p>
+    <p class="hero__author">by Kabeer Sabharwal</p>
+  </div>
+
+  <div class="install-banner" id="install-banner" style="display:none">
+    <p class="install-banner__text">Install on your home screen for instant access</p>
+    <button class="install-banner__btn" id="install-btn">Install</button>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress__header">
+      <span class="progress__label" id="progress-label">0 of 21 days</span>
+      <strong class="progress__value" id="progress-value">0%</strong>
+    </div>
+    <div class="progress__track"><div class="progress__fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress__phases">
+      <span class="phase"><span class="phase__dot" style="background:var(--gold-bright)"></span>Awareness</span>
+      <span class="phase"><span class="phase__dot" style="background:var(--gold)"></span>Belief</span>
+      <span class="phase"><span class="phase__dot" style="background:var(--gold-dim)"></span>Alignment</span>
+    </div>
+  </div>
+
+  <div class="view-scroll">
+    <div class="separator"></div>
+    <div class="day-grid" id="day-grid"></div>
+  </div>
+</div>
+
+<!-- ═══ AI COACH VIEW ═══ -->
+<div class="view" id="view-coach">
+  <div class="page-header">
+    <h2 class="page-header__title">Wealth Coach</h2>
+    <p class="page-header__subtitle">Your personal guide through inner transformation</p>
+  </div>
+  <div class="quick-prompts">
+    <button class="chip" onclick="qp('Give me today\'s affirmation')">Today's affirmation</button>
+    <button class="chip" onclick="qp('How is my progress?')">My progress</button>
+    <button class="chip" onclick="qp('I need motivation')">Motivation</button>
+    <button class="chip" onclick="qp('How do I overcome scarcity mindset?')">Scarcity mindset</button>
+  </div>
+  <div class="view-scroll">
+    <div class="chat-messages" id="chat-messages">
+      <div class="bubble bubble--ai">Welcome to Wealthy Within. I am your personal guide through this 21-day inner wealth journey. Ask me anything \u2014 about today\u2019s practice, your mindset, affirmations, or simply when you need a moment of clarity.</div>
+    </div>
+  </div>
+  <div class="chat-input-bar">
+    <textarea id="chat-input" rows="1" placeholder="Ask anything..."></textarea>
+    <button class="btn-send" id="btn-send" onclick="sendChat()">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ═══ JOURNAL VIEW ═══ -->
+<div class="view" id="view-journal">
+  <div class="page-header">
+    <h2 class="page-header__title">Journal</h2>
+    <p class="page-header__subtitle">Write your transformation into being</p>
+  </div>
+  <div class="view-scroll">
+    <div class="journal-form">
+      <select class="journal-select" id="journal-select" onchange="loadJournalEntry()"></select>
+      <textarea class="journal-textarea" id="journal-text" placeholder="What shifted in you today? What did you feel, notice, or release?"></textarea>
+      <button class="btn-save-entry" onclick="saveJournalEntry()">Save Entry</button>
+    </div>
+    <div class="journal-entries">
+      <div class="journal-entries__label">Past Entries</div>
+      <div id="journal-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STATS VIEW ═══ -->
+<div class="view" id="view-stats">
+  <div class="page-header">
+    <h2 class="page-header__title">Your Journey</h2>
+    <p class="page-header__subtitle">Every day is a step closer to yourself</p>
+  </div>
+  <div class="view-scroll">
+    <div class="stats-grid" id="stats-grid"></div>
+    <div class="heatmap">
+      <div class="heatmap__label">21-Day Map</div>
+      <div class="heatmap__grid" id="heatmap-grid"></div>
+    </div>
+    <div style="height:80px"></div>
+  </div>
+</div>
+
+<!-- ═══ NAV BAR ═══ -->
+<nav class="nav-bar">
+  <button class="nav-item is-active" id="nav-home" onclick="navigate('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </button>
+  <button class="nav-item" id="nav-coach" onclick="navigate('coach')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Coach
+  </button>
+  <button class="nav-item" id="nav-journal" onclick="navigate('journal')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    Journal
+  </button>
+  <button class="nav-item" id="nav-stats" onclick="navigate('stats')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Progress
+  </button>
+</nav>
+
+<!-- ═══ MODAL ═══ -->
+<div class="modal-backdrop" id="modal" onclick="closeModal(event)">
+  <div class="modal-panel">
+    <div class="modal-panel__handle"></div>
+    <div class="modal-panel__body">
+      <div class="modal__meta" id="modal-meta"></div>
+      <div class="modal__title" id="modal-title"></div>
+      <div class="modal-section">
+        <div class="modal-section__label">Today's Practice</div>
+        <div class="modal-section__practice" id="modal-practice"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section__label">Affirmation</div>
+        <div class="modal-section__affirmation" id="modal-affirmation"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section__label">Personal Insight</div>
+        <div class="modal-section__insight" id="modal-insight">Tap below to receive your personal insight for today.</div>
+        <button class="btn-insight" id="btn-insight" onclick="fetchInsight()">Receive Insight</button>
+      </div>
+      <button class="btn-complete" id="btn-complete" onclick="toggleComplete()"></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// WEALTHY WITHIN v2 — Application Logic
+// ═══════════════════════════════════════════════════════════════
+
+const DAYS = [
+  {day:1,title:"Awareness",practice:"Observe your thoughts about money today without judgment \u2014 just notice. Write down 3 money thoughts in a notebook, exactly as they appear.",affirmation:"I am beginning to understand my inner world. Awareness is the seed of all change."},
+  {day:2,title:"Gratitude",practice:"Make a list of 5 things you are genuinely grateful for right now \u2014 a warm meal, a roof, someone who cares. Feel each one fully.",affirmation:"What I appreciate, appreciates. Gratitude opens every door to abundance."},
+  {day:3,title:"Desires",practice:"Write 10 things you truly want \u2014 without censoring yourself. Big, small, material, emotional. Let yourself want freely and without guilt.",affirmation:"My desires are not selfish \u2014 they are sacred. I am worthy of receiving everything I wish for."},
+  {day:4,title:"Beliefs",practice:"Identify one belief that may be blocking wealth from reaching you. Write it clearly. Then say aloud three times: 'This belief no longer serves me. I release it now.'",affirmation:"Old beliefs dissolve easily. I am open to new, expansive truths about money and abundance."},
+  {day:5,title:"Visualize",practice:"Sit quietly for 5 minutes. Close your eyes. See yourself living a financially free life \u2014 where are you, what are you doing, how do you feel? Stay in that feeling.",affirmation:"My vision of abundance is real and it is already making its way to me."},
+  {day:6,title:"Ask",practice:"Write with clarity and specificity: What do I want? How much? What life does it create? Be precise \u2014 the universe responds to clarity.",affirmation:"I ask with confidence. My request has been received and is already in motion."},
+  {day:7,title:"Week 1 Review",practice:"Pause and reflect on the past 7 days. What shifted? What surprised you? What became clearer? Write a full reflection in your journal.",affirmation:"Every single day I am growing. I trust this process completely."},
+  {day:8,title:"Money Flow",practice:"Each time you spend money today, pause and say silently: 'Money flows out and flows back to me, always.' Feel gratitude instead of guilt.",affirmation:"Money is energy. It flows freely through me and always returns multiplied."},
+  {day:9,title:"Language",practice:"Today, every time you feel the urge to say 'I can't afford it' \u2014 pause. Replace it with: 'I'm choosing not to spend on that right now.' Notice the difference.",affirmation:"My words shape my reality. I choose the language of abundance and possibility."},
+  {day:10,title:"Receive",practice:"Practice receiving fully today. When someone gives you a compliment, a gift, or an act of kindness \u2014 simply say 'Thank you' and let it land. No deflecting.",affirmation:"I am open to receiving in all forms. I am worthy of love, abundance, and generosity."},
+  {day:11,title:"Generosity",practice:"Give something freely today \u2014 your time, a kind word, a small amount of money, a smile. Give without keeping score.",affirmation:"The more freely I give, the more freely life gives back to me."},
+  {day:12,title:"Feel Rich",practice:"Before wealth arrives, embody it. Wear your favourite clothes, drink your tea slowly, walk with ease \u2014 act as if you are already free. Do this all day.",affirmation:"Feeling rich IS being rich. My inner state creates my outer reality."},
+  {day:13,title:"Role Models",practice:"Research one person who built wealth from very little. Read about their mindset \u2014 not just their strategy. Absorb how they thought about money.",affirmation:"What others have achieved is proof of what is possible for me too."},
+  {day:14,title:"Midpoint",practice:"You are halfway. Sit with that. Notice what has quietly shifted \u2014 in your thoughts, your conversations, your feelings about money. Celebrate this.",affirmation:"I am in the middle of a real transformation. I honour how far I have come."},
+  {day:15,title:"Fear Release",practice:"Write your deepest fear about money on a piece of paper. Then destroy it \u2014 tear it, burn it safely, bury it. Symbolically release it from your life.",affirmation:"I am free from financial fear. Abundance is not something I earn \u2014 it is who I am."},
+  {day:16,title:"Money Story",practice:"What did you learn about money as a child? What was said in your home? Write your old story \u2014 then write a new one, one that serves you.",affirmation:"My new money story begins now: wealth comes to me easily, joyfully, and consistently."},
+  {day:17,title:"Action",practice:"Inspired action is the bridge between thought and reality. Take one small, concrete step today toward your financial goal \u2014 one email, one idea, one conversation.",affirmation:"I act from inspiration, not desperation. Every step I take is supported by the universe."},
+  {day:18,title:"Signs",practice:"Look for signs of abundance all around you today \u2014 a coin found, a free coffee, an unexpected discount, a stranger's kindness. Count them. They are messages.",affirmation:"Abundance surrounds me constantly. I am awake to its presence."},
+  {day:19,title:"Future Self",practice:"Write a letter from your future, financially free self to your present self. What do they want you to know? What do they want you to trust?",affirmation:"My future self is already whole. I am walking toward that version of me with every breath."},
+  {day:20,title:"Alignment",practice:"Do one thing today purely for joy \u2014 dance, create, walk in nature, sing. Joy is not a luxury. It is the frequency of abundance.",affirmation:"When I live in joy, I am in perfect alignment with everything I desire."},
+  {day:21,title:"Integration",practice:"21 days complete. Write the full arc of your journey \u2014 where you began, what cracked open, what you now know. Then commit to carrying this forward.",affirmation:"I have changed from the inside. Wealth \u2014 in all its forms \u2014 is now my natural state."},
+];
+
+// ── State ──
+let state = JSON.parse(localStorage.getItem('ww_v2') || '{"done":{},"journal":{}}');
+let activeDay = null;
+let chatHistory = [];
+let installPrompt = null;
+
+const persist = () => localStorage.setItem('ww_v2', JSON.stringify(state));
+
+
+// ── Toast ──
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('is-visible');
+  setTimeout(() => el.classList.remove('is-visible'), 2800);
+}
+
+// ── Navigation ──
+function navigate(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('is-active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('is-active'));
+  document.getElementById('view-' + view).classList.add('is-active');
+  document.getElementById('nav-' + view).classList.add('is-active');
+  if (view === 'home') renderHome();
+  if (view === 'stats') renderStats();
+  if (view === 'journal') renderJournal();
+}
+
+// ── Install PWA ──
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  installPrompt = e;
+  document.getElementById('install-banner').style.display = 'flex';
+});
+document.getElementById('install-btn').onclick = async () => {
+  if (!installPrompt) return;
+  installPrompt.prompt();
+  const { outcome } = await installPrompt.userChoice;
+  if (outcome === 'accepted') document.getElementById('install-banner').style.display = 'none';
+  installPrompt = null;
+};
+
+// ── Home View ──
+function renderHome() {
+  const done = Object.keys(state.done).length;
+  const pct = Math.round((done / 21) * 100);
+  document.getElementById('progress-label').textContent = done + ' of 21 days';
+  document.getElementById('progress-value').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  const grid = document.getElementById('day-grid');
+  grid.innerHTML = '';
+  DAYS.forEach(({ day, title }) => {
+    const isDone = !!state.done[day];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (isDone ? ' day-card--done' : '');
+    card.style.animationDelay = ((day - 1) * 0.035) + 's';
+    card.innerHTML =
+      '<div>' +
+        '<span class="day-card__number">Day ' + day + '</span>' +
+        '<div class="day-card__title">' + title + '</div>' +
+      '</div>' +
+      '<div class="day-card__check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>';
+    card.onclick = () => openModal(day);
+    grid.appendChild(card);
+  });
+}
+
+// ── Modal ──
+function openModal(day) {
+  const d = DAYS[day - 1];
+  activeDay = day;
+  const week = day <= 7 ? 1 : day <= 14 ? 2 : 3;
+  const isDone = !!state.done[day];
+
+  document.getElementById('modal-meta').textContent = 'Day ' + day + '  \u00b7  Week ' + week;
+  document.getElementById('modal-title').textContent = d.title;
+  document.getElementById('modal-practice').textContent = d.practice;
+  document.getElementById('modal-affirmation').textContent = '\u201c' + d.affirmation + '\u201d';
+  document.getElementById('modal-insight').textContent = 'Tap below to receive your personal insight for today.';
+  document.getElementById('btn-insight').disabled = false;
+  document.getElementById('btn-insight').textContent = 'Receive Insight';
+
+  updateCompleteBtn(isDone);
+  document.getElementById('modal').classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal')) return;
+  document.getElementById('modal').classList.remove('is-open');
+  document.body.style.overflow = '';
+  activeDay = null;
+}
+
+function updateCompleteBtn(isDone) {
+  const btn = document.getElementById('btn-complete');
+  btn.textContent = isDone ? 'Mark as Incomplete' : "Complete Today's Practice";
+  btn.style.background = isDone ? 'rgba(255,255,255,0.03)' : 'linear-gradient(135deg, var(--gold-dim), var(--gold))';
+  btn.style.color = isDone ? 'var(--text-muted)' : 'var(--bg)';
+  btn.style.border = isDone ? '1px solid var(--border-subtle)' : 'none';
+}
+
+function toggleComplete() {
+  if (!activeDay) return;
+  if (state.done[activeDay]) delete state.done[activeDay];
+  else state.done[activeDay] = new Date().toISOString();
+  persist();
+  renderHome();
+  const isDone = !!state.done[activeDay];
+  updateCompleteBtn(isDone);
+  showToast(isDone ? 'Day ' + activeDay + ' complete \u2728' : 'Day ' + activeDay + ' unmarked');
+}
+
+// ── AI Insight ──
+async function fetchInsight() {
+  if (!activeDay) return;
+  const d = DAYS[activeDay - 1];
+  const done = Object.keys(state.done).length;
+  const btn = document.getElementById('btn-insight');
+  const out = document.getElementById('modal-insight');
+  btn.disabled = true;
+  btn.textContent = 'Receiving...';
+  out.textContent = '\u2728 Connecting to your inner wisdom...';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'You are the inner wealth guide for "Wealthy Within" \u2014 a 21-day mindset and abundance journey created by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Give a 3-4 sentence personal insight that deepens today\'s specific practice. Be grounding, specific, and genuine. Avoid clich\u00e9s.',
+        messages: [{ role: 'user', content: 'Day ' + activeDay + ' \u2014 "' + d.title + '". Practice: ' + d.practice + '. The user has completed ' + done + '/21 days. Give them a personal, deepening insight for today.' }]
+      })
+    });
+    const data = await res.json();
+    out.textContent = data.content?.[0]?.text || 'No response. Please try again.';
+  } catch (e) {
+    out.textContent = 'Connection error. Please try again.';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Receive Insight';
+}
+
+// ── AI Coach Chat ──
+function qp(text) {
+  document.getElementById('chat-input').value = text;
+  sendChat();
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const sendBtn = document.getElementById('btn-send');
+  sendBtn.disabled = true;
+  input.value = '';
+  input.style.height = 'auto';
+
+  const area = document.getElementById('chat-messages');
+  const userBubble = document.createElement('div');
+  userBubble.className = 'bubble bubble--user';
+  userBubble.textContent = msg;
+  area.appendChild(userBubble);
+
+  const aiBubble = document.createElement('div');
+  aiBubble.className = 'bubble bubble--ai bubble--loading';
+  aiBubble.textContent = 'Reflecting...';
+  area.appendChild(aiBubble);
+  area.scrollTop = area.scrollHeight;
+
+  const done = Object.keys(state.done).length;
+  chatHistory.push({ role: 'user', content: msg });
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'You are the AI Wealth Coach inside "Wealthy Within" \u2014 a 21-day inner wealth journey created by Kabeer Sabharwal. Speak with warmth, quiet wisdom, and depth. Rooted in abundance mindset, Law of Attraction, and conscious living principles. The user has completed ' + done + '/21 days. Be conversational, genuine, and concise. No bullet points.',
+        messages: chatHistory
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'No response received.';
+    aiBubble.className = 'bubble bubble--ai';
+    aiBubble.textContent = reply;
+    chatHistory.push({ role: 'assistant', content: reply });
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-16);
+  } catch (e) {
+    aiBubble.className = 'bubble bubble--ai';
+    aiBubble.textContent = 'Connection error. Please try again.';
+  }
+  sendBtn.disabled = false;
+  area.scrollTop = area.scrollHeight;
+}
+
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+});
+document.getElementById('chat-input').addEventListener('input', function () {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 110) + 'px';
+});
+
+// ── Journal ──
+function renderJournal() {
+  const sel = document.getElementById('journal-select');
+  sel.innerHTML = DAYS.map(d => '<option value="' + d.day + '">Day ' + d.day + ' \u2014 ' + d.title + '</option>').join('');
+  sel.value = Math.min(Object.keys(state.done).length + 1, 21) || 1;
+  loadJournalEntry();
+  renderJournalEntries();
+}
+
+function loadJournalEntry() {
+  const day = document.getElementById('journal-select').value;
+  document.getElementById('journal-text').value = state.journal[day] || '';
+}
+
+function saveJournalEntry() {
+  const day = document.getElementById('journal-select').value;
+  const text = document.getElementById('journal-text').value.trim();
+  if (!text) return;
+  state.journal[day] = text;
+  persist();
+  showToast('Entry saved \u2728');
+  renderJournalEntries();
+}
+
+function renderJournalEntries() {
+  const list = document.getElementById('journal-list');
+  const entries = Object.entries(state.journal).filter(([, v]) => v).sort(([a], [b]) => Number(a) - Number(b));
+  list.innerHTML = entries.length
+    ? entries.map(([day, text]) =>
+      '<div class="entry-card"><div class="entry-card__day">Day ' + day + ' \u2014 ' + (DAYS[day - 1]?.title || '') + '</div><div class="entry-card__text">' + text.slice(0, 130) + (text.length > 130 ? '\u2026' : '') + '</div></div>'
+    ).join('')
+    : '<div style="color:var(--text-muted);font-size:13px;font-weight:300;font-style:italic">No entries yet. Begin writing your story.</div>';
+}
+
+// ── Stats ──
+function renderStats() {
+  const done = Object.keys(state.done).length;
+  const journalCount = Object.values(state.journal).filter(v => v).length;
+  let streak = 0;
+  for (let i = 1; i <= 21; i++) { if (state.done[i]) streak++; else break; }
+
+  document.getElementById('stats-grid').innerHTML =
+    '<div class="stat-card"><div class="stat-card__value">' + done + '</div><div class="stat-card__label">Days Complete</div></div>' +
+    '<div class="stat-card"><div class="stat-card__value">' + Math.round((done / 21) * 100) + '%</div><div class="stat-card__label">Progress</div></div>' +
+    '<div class="stat-card"><div class="stat-card__value">' + streak + '</div><div class="stat-card__label">Day Streak</div></div>' +
+    '<div class="stat-card"><div class="stat-card__value">' + journalCount + '</div><div class="stat-card__label">Journal Entries</div></div>';
+
+  document.getElementById('heatmap-grid').innerHTML = DAYS.map(({ day }) => {
+    const isDone = !!state.done[day];
+    return '<div class="heatmap__cell ' + (isDone ? 'heatmap__cell--done' : 'heatmap__cell--pending') + '" onclick="openModal(' + day + ')">' + day + '</div>';
+  }).join('');
+}
+
+// ── Initialize ──
+renderHome();
+</script>
+
+</body>
+</html>
